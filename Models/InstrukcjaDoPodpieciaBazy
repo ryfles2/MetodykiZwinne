@@ -1,0 +1,10 @@
+Instrukcja po polsku bo tak:
+
+1)Jezeli chcesz odpalić bazkę to wchodzisz w phpmyadmin
+2)Musisz miec puste baze danych (najlepiej to zrobić dropa na starej i sworzyc nowa pusta)
+3)Klikasz "import" z paska na gorze
+4)Klikasz przycisk "Wybierz plik" 
+5)Wykonaj
+
+Generalnie jak masz jakies bledy to pewnie pominąłeś punkt 2.
+phpmyadmin najlepiej pobrac z xamppem. Musisz miec włączony serwer php i mysqla
