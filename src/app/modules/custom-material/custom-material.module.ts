@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatButtonModule, MatInputModule, MatCardModule, MatFormFieldModule, MatToolbarModule } from '@angular/material';
+// tslint:disable-next-line: max-line-length
+import { MatButtonModule, MatInputModule, MatCardModule, MatFormFieldModule, MatToolbarModule, MatListModule, MatIconModule} from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 
@@ -15,7 +16,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatFormFieldModule,
     FlexLayoutModule,
     MatToolbarModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatListModule,
+    MatIconModule
   ],
 
   exports: [
@@ -26,7 +29,9 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatFormFieldModule,
     FlexLayoutModule,
     MatToolbarModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatListModule,
+    MatIconModule
   ]
 })
 export class CustomMaterialModule { }

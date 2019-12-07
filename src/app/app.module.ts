@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { CoreModule } from './core/core.module';
 import { GeneralModule } from './modules/general/general.module';
 import { ErrorModule } from './modules/error/error.module';
+import { CustomMaterialModule } from './modules/custom-material/custom-material.module';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { ErrorModule } from './modules/error/error.module';
     AppRoutingModule,
     CoreModule,
     GeneralModule,
-    ErrorModule
+    ErrorModule,
+    CustomMaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

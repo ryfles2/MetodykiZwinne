@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
 
+  logoCaption = 'Smart Pool System';
   constructor() { }
 
   ngOnInit() {
