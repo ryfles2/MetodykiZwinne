@@ -1,12 +1,11 @@
-<mat-toolbar color="primary" id="header">
-<div id="logo">{{ logoCaption }}</div>
+<div fxLayout="row wrap" fxLayoutAlign="center center" color="primary" id="header">
 <div fxFlex>
 </div>
 <div>
-  <mat-list id="header-nav">
+  <mat-list id="header-nav" fxFlex fxLayoutAlign="center center">
     <mat-list-item>
-        <button [ngClass]="'nav-item'" mat-icon-button color="accent"><mat-icon>account_box</mat-icon></button>
+        <button [ngClass]="'nav-item'" mat-icon-button color="accent"><mat-icon>account_circle</mat-icon></button>
     </mat-list-item>
   </mat-list>
 </div>
-</mat-toolbar>
+</div>
