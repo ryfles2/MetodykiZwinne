@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2019 at 12:58 PM
+-- Generation Time: Dec 07, 2019 at 06:56 PM
 -- Server version: 10.4.8-MariaDB
 -- PHP Version: 7.2.24
 
@@ -19,7 +19,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pool`
+-- Database: `spsdb`
 --
 
 -- --------------------------------------------------------
@@ -30,15 +30,15 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `lockers` (
   `id` int(11) NOT NULL,
-  `Status` int(11) NOT NULL
+  `state` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
 -- Dumping data for table `lockers`
 --
 
-INSERT INTO `lockers` (`id`, `Status`) VALUES
-(1, 1),
+INSERT INTO `lockers` (`id`, `state`) VALUES
+(1, 2),
 (2, 1);
 
 -- --------------------------------------------------------
