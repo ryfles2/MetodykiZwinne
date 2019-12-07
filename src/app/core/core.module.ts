@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from './header/header.component';
 import { FooterComponent } from './footer/footer.component';
 import { CustomMaterialModule } from '../modules/custom-material/custom-material.module';
+import { LockersService } from './http/lockers.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -14,7 +16,9 @@ import { CustomMaterialModule } from '../modules/custom-material/custom-material
   ],
   exports: [
     HeaderComponent,
-    FooterComponent
-  ]
+    FooterComponent,
+    HttpClientModule
+  ],
+  providers: [LockersService]
 })
 export class CoreModule { }

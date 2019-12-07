@@ -7,7 +7,7 @@
       There are
     </div>
     <div id="lockers-available">
-      {{ availableLockers }}
+      <button mat-button (click)="fireGetLockers()">{{ availableLockers }}</button>
     </div>
     <div fxFlex fxLayoutAlign="center end"  class="lockers-information-part">
       lockers available

@@ -7,6 +7,7 @@ import { CoreModule } from './core/core.module';
 import { GeneralModule } from './modules/general/general.module';
 import { ErrorModule } from './modules/error/error.module';
 import { CustomMaterialModule } from './modules/custom-material/custom-material.module';
+import { LockersService } from './core/http/lockers.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,7 @@ import { CustomMaterialModule } from './modules/custom-material/custom-material.
     ErrorModule,
     CustomMaterialModule
   ],
-  providers: [],
+  providers: [LockersService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
