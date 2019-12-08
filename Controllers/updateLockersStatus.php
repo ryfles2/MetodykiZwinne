@@ -1,9 +1,10 @@
 <?php
+require_once "databaseConnector.php";
 
-$id = $_GET['number'];
+$id = $_GET['id'];
 $state = $_GET['state'];
 
-$updateLockersQuery = "UPDATE lockers SET state = \"$login\" WHERE id = \"$id\"";
+$updateLockersQuery = "UPDATE lockers SET state = \"$state\" WHERE id = \"$id\"";
 $result = $con->query($updateLockersQuery);
 if($result)
 {
@@ -14,6 +15,5 @@ else
     echo "Failed";
     echo "Database problem";
 }
-
 
 ?>
