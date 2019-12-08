@@ -12,8 +12,10 @@ $foundUsers =  mysqli_fetch_assoc($result)['fndLogin'];
 
 if($foundUsers == 1)
 {
-    echo "Failed";
-    echo "This user already exists";
+    $response = array(
+        'status' => 'failed',
+        'description' => 'This user already exists'
+    );
 }
 else
 {
@@ -23,14 +25,21 @@ else
     
     if($result)
     {
-        echo "Success";
-    }   
+        $response = array(
+            'status' => 'success',
+            'description' => 'User added'
+        );
+    }
     else
     {
-        echo "Failed";
-        echo "Database problem";
+        $response = array(
+            'status' => 'failed',
+            'description' => 'Database problem'
+        );
     }
 
 }
+
+echo json_encode($response);
 
 ?>
