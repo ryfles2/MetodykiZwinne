@@ -2,10 +2,10 @@
 -- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 07, 2019 at 06:56 PM
--- Server version: 10.4.8-MariaDB
--- PHP Version: 7.2.24
+-- Host: localhost
+-- Czas generowania: 07 Sty 2020, 21:09
+-- Wersja serwera: 10.4.8-MariaDB
+-- Wersja PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,13 +19,32 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `spsdb`
+-- Baza danych: `spsDb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `lockers`
+-- Struktura tabeli dla tabeli `dayStatistics`
+--
+
+CREATE TABLE `dayStatistics` (
+  `id` int(11) NOT NULL,
+  `day` date NOT NULL,
+  `used` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Zrzut danych tabeli `dayStatistics`
+--
+
+INSERT INTO `dayStatistics` (`id`, `day`, `used`) VALUES
+(1, '2020-01-07', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `lockers`
 --
 
 CREATE TABLE `lockers` (
@@ -34,17 +53,17 @@ CREATE TABLE `lockers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `lockers`
+-- Zrzut danych tabeli `lockers`
 --
 
 INSERT INTO `lockers` (`id`, `state`) VALUES
-(1, 2),
+(1, 1),
 (2, 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktura tabeli dla tabeli `users`
 --
 
 CREATE TABLE `users` (
@@ -55,24 +74,32 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Dumping data for table `users`
+-- Zrzut danych tabeli `users`
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `type`) VALUES
-(1, 'admin', 'tajne', 1);
+(1, 'admin', 'tajne', 1),
+(2, 'SpringUser', 'test', 1),
+(3, 'SpringUser2', 'test', 1);
 
 --
--- Indexes for dumped tables
+-- Indeksy dla zrzutów tabel
 --
 
 --
--- Indexes for table `lockers`
+-- Indeksy dla tabeli `dayStatistics`
+--
+ALTER TABLE `dayStatistics`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeksy dla tabeli `lockers`
 --
 ALTER TABLE `lockers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeksy dla tabeli `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
@@ -82,16 +109,22 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT for table `lockers`
+-- AUTO_INCREMENT dla tabeli `dayStatistics`
+--
+ALTER TABLE `dayStatistics`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT dla tabeli `lockers`
 --
 ALTER TABLE `lockers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `users`
+-- AUTO_INCREMENT dla tabeli `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
