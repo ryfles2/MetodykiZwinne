@@ -1,0 +1,17 @@
+<div fxLayout="row wrap" fxLayoutAlign="center center" color="primary" id="header">
+<div fxFlex fxLayoutAlign="start start" id="logo">
+  <img src="../../../assets/logo.png"/>
+</div>
+<div fxFlex>
+</div>
+<div>
+  <mat-list id="header-nav" fxFlex fxLayoutAlign="center center">
+    <mat-list-item *ngIf="router.url == '/showLoginPanel'">
+        <button [ngClass]="'nav-item'" mat-icon-button color="accent" (click)="showLoginDialog()"><mat-icon>account_circle</mat-icon></button>
+    </mat-list-item>
+    <ng-template #loggedIn>
+      <div id="logged-as">Logged as <u>{{ username }}</u></div>
+    </ng-template>
+  </mat-list>
+</div>
+</div>
