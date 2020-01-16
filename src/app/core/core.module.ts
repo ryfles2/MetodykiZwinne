@@ -5,6 +5,7 @@ import { FooterComponent } from './footer/footer.component';
 import { CustomMaterialModule } from '../modules/custom-material/custom-material.module';
 import { LockersService } from './http/lockers.service';
 import { HttpClientModule } from '@angular/common/http';
+import { LoginDialogComponent } from '../modules/general/home/login-dialog/login-dialog.component';
 
 
 
