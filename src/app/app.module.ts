@@ -8,6 +8,7 @@ import { GeneralModule } from './modules/general/general.module';
 import { ErrorModule } from './modules/error/error.module';
 import { CustomMaterialModule } from './modules/custom-material/custom-material.module';
 import { LockersService } from './core/http/lockers.service';
+import { AdminModule } from './modules/admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { LockersService } from './core/http/lockers.service';
     CoreModule,
     GeneralModule,
     ErrorModule,
+    AdminModule,
     CustomMaterialModule
   ],
   providers: [LockersService],

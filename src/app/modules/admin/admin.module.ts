@@ -1,12 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { ManagementComponent } from './management/management.component';
+import { CustomMaterialModule } from '../custom-material/custom-material.module';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [ManagementComponent],
   imports: [
-    CommonModule
+    CommonModule,
+    CustomMaterialModule
   ]
 })
 export class AdminModule { }
