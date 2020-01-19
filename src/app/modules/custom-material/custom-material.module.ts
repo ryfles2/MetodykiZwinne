@@ -6,6 +6,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { ChartsModule } from 'ng2-charts';
 
 
 
@@ -31,7 +32,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatTableModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChartsModule
   ],
 
   exports: [
@@ -54,7 +56,8 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     MatTableModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    ChartsModule
   ]
 })
 export class CustomMaterialModule { }
