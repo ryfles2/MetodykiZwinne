@@ -4,7 +4,7 @@ require_once "databaseConnector.php";
 $id = $_GET['id'];
 
 $deleteUser_sql = "DELETE FROM Users WHERE id = \"$id\"";
-echo($deleteUser_sql);
+
 $result = $con->query($deleteUser_sql);
 
 
