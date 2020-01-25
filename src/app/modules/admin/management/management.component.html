@@ -1,5 +1,5 @@
 <div id="admin-wrapper" fxLayout="column" fxLayoutAlign="start center">
-  <mat-tab-group [backgroundColor]="'accent'">
+  <mat-tab-group id='tab-group' [backgroundColor]="'accent'">
     <mat-tab class="tab-content" label="Keys">
       <mat-table [dataSource]="this.lockers">
         <ng-container matColumnDef="Number">
@@ -34,22 +34,31 @@
     </mat-tab>
     <mat-tab class="tab-content" label="Errors"> Content 2 </mat-tab>
     <mat-tab class="tab-content" label="Users">
-      <mat-table [dataSource]="this.lockers">
+      <mat-table [dataSource]="this.users">
         <ng-container matColumnDef="User">
-          <mat-header-cell color="'accent'" fxFlex fxLayoutAlign="center center" *matHeaderCellDef>User</mat-header-cell>
-          <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
-            User-x
+          <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center" *matHeaderCellDef>User</mat-header-cell>
+          <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="center center" *matCellDef="let user">
+            {{user.login + ' (' + rightsMatrixMap[user.type] + ')'}}
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="{{right.name}}" *ngFor="let right of rightsMatrix">
-          <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>{{right.name}}</mat-header-cell>
-          <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
-            <mat-checkbox [color]="'primary'"></mat-checkbox>
+        <ng-container matColumnDef="Rights">
+          <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Rights edit</mat-header-cell>
+          <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let user">
+              <mat-radio-group fxLayout="row">
+                <div *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center" [ngClass]="'right-group'">
+                  <mat-radio-button #radio [color]="'primary'"  [value]="right.id">{{right.name}}</mat-radio-button>
+                </div>
+              </mat-radio-group>
           </mat-cell>
         </ng-container>
 
-
+        <ng-container matColumnDef="Action">
+          <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center" *matHeaderCellDef></mat-header-cell>
+          <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="center center" *matCellDef="let user">
+            <button mat-icon-button (click)="this.updateUserType(user.id, radio.value)"><mat-icon>check</mat-icon></button>
+          </mat-cell>
+        </ng-container>
 
         <mat-header-row *matHeaderRowDef="usersTabs"></mat-header-row>
         <mat-row *matRowDef="let row; columns: usersTabs"></mat-row>

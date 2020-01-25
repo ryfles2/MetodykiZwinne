@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
 import { User } from 'src/app/shared/models/user';
 
 @Injectable({
@@ -28,7 +27,7 @@ export class LoginService {
         .concat(this.serviceParameters[1])
         .concat('=')
         .concat(values[1]),
-        {responseType: 'text'}
+        {Type: 'text'}
     );
   }
 }

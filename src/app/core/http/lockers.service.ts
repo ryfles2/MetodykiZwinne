@@ -18,6 +18,6 @@ export class LockersService {
   }
 
   updateLocker(id: number, state: number): Observable<any> {
-    return this.httpClient.post<any>(environment.apiUrl + this.updateLockerUrl + '?id=' + id + '&state=' + state, null, { responseType: 'text' });
+    return this.httpClient.post<any>(environment.apiUrl + this.updateLockerUrl + '?id=' + id + '&state=' + state, null, { responseType: 'json' });
   }
 }
