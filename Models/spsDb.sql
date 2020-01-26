@@ -2,10 +2,10 @@
 -- version 4.9.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Czas generowania: 07 Sty 2020, 21:09
--- Wersja serwera: 10.4.8-MariaDB
--- Wersja PHP: 7.1.32
+-- Host: 127.0.0.1
+-- Generation Time: Jan 26, 2020 at 03:51 PM
+-- Server version: 10.4.8-MariaDB
+-- PHP Version: 7.2.24
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,32 +19,45 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Baza danych: `spsDb`
+-- Database: `spsdb`
 --
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `dayStatistics`
+-- Table structure for table `daystatistics`
 --
 
-CREATE TABLE `dayStatistics` (
+CREATE TABLE `daystatistics` (
   `id` int(11) NOT NULL,
   `day` date NOT NULL,
   `used` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Zrzut danych tabeli `dayStatistics`
+-- Dumping data for table `daystatistics`
 --
 
-INSERT INTO `dayStatistics` (`id`, `day`, `used`) VALUES
+INSERT INTO `daystatistics` (`id`, `day`, `used`) VALUES
 (1, '2020-01-07', 2);
 
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `lockers`
+-- Table structure for table `errors`
+--
+
+CREATE TABLE `errors` (
+  `id` int(11) NOT NULL,
+  `message` text COLLATE utf8_polish_ci NOT NULL,
+  `state` int(11) NOT NULL,
+  `locker_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `lockers`
 --
 
 CREATE TABLE `lockers` (
@@ -53,7 +66,7 @@ CREATE TABLE `lockers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Zrzut danych tabeli `lockers`
+-- Dumping data for table `lockers`
 --
 
 INSERT INTO `lockers` (`id`, `state`) VALUES
@@ -63,7 +76,7 @@ INSERT INTO `lockers` (`id`, `state`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktura tabeli dla tabeli `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -74,7 +87,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_polish_ci;
 
 --
--- Zrzut danych tabeli `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`id`, `login`, `password`, `type`) VALUES
@@ -83,23 +96,29 @@ INSERT INTO `users` (`id`, `login`, `password`, `type`) VALUES
 (3, 'SpringUser2', 'test', 1);
 
 --
--- Indeksy dla zrzutów tabel
+-- Indexes for dumped tables
 --
 
 --
--- Indeksy dla tabeli `dayStatistics`
+-- Indexes for table `daystatistics`
 --
-ALTER TABLE `dayStatistics`
+ALTER TABLE `daystatistics`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksy dla tabeli `lockers`
+-- Indexes for table `errors`
+--
+ALTER TABLE `errors`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `lockers`
 --
 ALTER TABLE `lockers`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeksy dla tabeli `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`);
@@ -109,19 +128,25 @@ ALTER TABLE `users`
 --
 
 --
--- AUTO_INCREMENT dla tabeli `dayStatistics`
+-- AUTO_INCREMENT for table `daystatistics`
 --
-ALTER TABLE `dayStatistics`
+ALTER TABLE `daystatistics`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT dla tabeli `lockers`
+-- AUTO_INCREMENT for table `errors`
+--
+ALTER TABLE `errors`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `lockers`
 --
 ALTER TABLE `lockers`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT dla tabeli `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
