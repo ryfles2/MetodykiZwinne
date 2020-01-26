@@ -12,14 +12,14 @@ $state = $_GET['state'];
     if($result)
     {
         $response = array(
-        'status' => 'success',
+        'status' => '0',
         'description' => 'Error added'
     );
     }
     else
     {
         $response = array(
-        'status' => 'failed',
+        'status' => '1',
         'description' => 'Database problem'
     );
     }

@@ -8,12 +8,16 @@ $updateUsersTypeQuery = "UPDATE users SET type = \"$type\" WHERE id = \"$id\"";
 $result = $con->query($updateUsersTypeQuery);
 if($result)
 {
-    echo "Success";
+    $response = array(
+        'status' => '0',
+        'description' => 'User added'
+    );
 }   
 else
 {
-    echo "Failed";
-    echo "Database problem";
+    $response = array(
+        'status' => '1',
+        'description' => 'Database problem'
 }
 
 ?>

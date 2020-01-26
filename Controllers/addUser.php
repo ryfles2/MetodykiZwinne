@@ -26,14 +26,14 @@ else
     if($result)
     {
         $response = array(
-            'status' => 'success',
+            'status' => '0',
             'description' => 'User added'
         );
     }
     else
     {
         $response = array(
-            'status' => 'failed',
+            'status' => '1',
             'description' => 'Database problem'
         );
     }
