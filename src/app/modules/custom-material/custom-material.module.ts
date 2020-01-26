@@ -33,7 +33,7 @@ import { ChartsModule } from 'ng2-charts';
     MatSelectModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    ChartsModule
+    ChartsModule,
   ],
 
   exports: [

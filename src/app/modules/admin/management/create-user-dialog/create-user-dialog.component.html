@@ -1,0 +1,27 @@
+<div>
+  <div id="title" fxLayout="row" fxLayoutAlign="center center">
+    <h2>Create an user</h2>
+  </div>
+
+  <mat-dialog-content>
+    <div fxLayout="column" fxFlexAlign="center center">
+      <mat-form-field>
+        <input matInput #login placeholder="Login"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput #password type="password" placeholder="Password"/>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-select #rights placeholder="Rights">
+          <mat-option *ngFor="let right of this.rightsMatrix" [value]="right.id">{{right.name}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions fxLayout="row" fxLayoutAlign="center center">
+    <button mat-stroked-button (click)="submit(login.value=='' ? undefined : login.value, password.value=='' ? undefined : password.value, rights.value==undefined ? undefined : rights.value)">Submit</button>
+  </mat-dialog-actions>
+</div>

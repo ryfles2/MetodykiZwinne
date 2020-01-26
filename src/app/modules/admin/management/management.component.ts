@@ -1,15 +1,18 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Locker } from 'src/app/shared/models/locker';
-import { LockersService } from 'src/app/core/http/lockers.service';
-import { MatSnackBar } from '@angular/material';
-import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Label } from 'ng2-charts';
-import { StatisticsService } from 'src/app/core/http/statistics.service';
-import { Statistic } from 'src/app/shared/models/statistic';
-import { UserService } from 'src/app/core/http/user.service';
-import { SpsUser } from 'src/app/shared/models/sps-user';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Locker} from 'src/app/shared/models/locker';
+import {LockersService} from 'src/app/core/http/lockers.service';
+import {MatSnackBar} from '@angular/material';
+import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
+import {Label} from 'ng2-charts';
+import {StatisticsService} from 'src/app/core/http/statistics.service';
+import {Statistic} from 'src/app/shared/models/statistic';
+import {UserService} from 'src/app/core/http/user.service';
+import {SpsUser} from 'src/app/shared/models/sps-user';
 import {MatCheckbox} from "@angular/material/checkbox";
 import {Observable} from "rxjs";
+import {MatRadioButton} from "@angular/material/radio";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateUserDialogComponent} from "./create-user-dialog/create-user-dialog.component";
 
 @Component({
   selector: 'app-management',
@@ -20,13 +23,15 @@ export class ManagementComponent implements OnInit {
 
   managementTabs = ['Number', 'State', 'Action'];
   statesMap = {
-    1 : 'Free',
-    2 : 'Busy'
+    1: 'Free',
+    2: 'Busy'
   };
   lockers: Locker[] = [];
   statistics: Statistic[] = [];
   statisticsUsed: number[] = [];
   statisticsDay: string[] = [];
+
+  @ViewChild('radioButton', {static: false}) accessRadioRef;
 
   rightsMatrix = [
     {id: 1, name: 'Low'},
@@ -47,19 +52,20 @@ export class ManagementComponent implements OnInit {
   barChartOptions: ChartOptions = {
     responsive: true,
   };
-  barChartLabels: Label[] =  [this.statisticsDay];
+  barChartLabels: Label[] = [this.statisticsDay];
   barChartType: ChartType = 'bar';
   barChartLegend = true;
   barChartPlugins = [];
 
   barChartData: ChartDataSets[] = [
-    { data: this.statisticsUsed, label: 'Visits' }
+    {data: this.statisticsUsed, label: 'Visits'}
   ];
 
   constructor(public lockerService: LockersService,
               public statisticsService: StatisticsService,
               public userService: UserService,
-              public snackBar: MatSnackBar) {
+              public snackBar: MatSnackBar,
+              public matDialog: MatDialog) {
 
   }
 
@@ -73,13 +79,13 @@ export class ManagementComponent implements OnInit {
     console.log('ID ---> ' + id);
     console.log('STATE ---> ' + state);
     this.lockerService.updateLocker(id, state).subscribe((data) => {
-      this.snackBar.open('Locker has been updated successfully', null, {duration: 2000});
-      this.getLockersData();
-    },
-    (error) => {
-      this.snackBar.open('Something went wrong while performing this operation..', null, {duration: 2000});
-      console.log(error);
-    });
+        this.snackBar.open('Locker has been updated successfully', null, {duration: 2000});
+        this.getLockersData();
+      },
+      (error) => {
+        this.snackBar.open('Something went wrong while performing this operation..', null, {duration: 2000});
+        console.log(error);
+      });
   }
 
   private getLockersData() {
@@ -96,24 +102,24 @@ export class ManagementComponent implements OnInit {
 
   public getStatistics() {
     this.statisticsService.getStatistics().subscribe((data) => {
-      this.statistics = data;
-      console.log(data);
-      this.statisticsDay = this.statistics.map(x => {
-        return x['day'];
-      });
-      this.statisticsUsed = this.statistics.map(x => {
-        return x['used'];
-      });
+        this.statistics = data;
+        console.log(data);
+        this.statisticsDay = this.statistics.map(x => {
+          return x['day'];
+        });
+        this.statisticsUsed = this.statistics.map(x => {
+          return x['used'];
+        });
 
 
-      this.barChartLabels =  this.statisticsDay;
-      this.barChartData = [
-        { data: this.statisticsUsed, label: 'Lockers actions' }
-      ];
-    },
-    (error) => {
-      console.log('Error while fetching statistics');
-    });
+        this.barChartLabels = this.statisticsDay;
+        this.barChartData = [
+          {data: this.statisticsUsed, label: 'Lockers actions'}
+        ];
+      },
+      (error) => {
+        console.log('Error while fetching statistics');
+      });
   }
 
   private getUsers() {
@@ -124,10 +130,28 @@ export class ManagementComponent implements OnInit {
   }
 
   public updateUserType(id, type) {
-    this.userService.updateUserType(id, type).subscribe(data => {
-      this.snackBar.open('User rights have been updated successfully!', null, {duration: 2000});
-    }, error => {
-      this.snackBar.open('Something went wrong..', null, {duration: 2000});
+    if (type != undefined) {
+      this.userService.updateUserType(id, type).subscribe(data => {
+          this.snackBar.open('User rights have been updated successfully!', null, {duration: 2000});
+        },
+        error => {
+          this.snackBar.open('Something went wrong..', null, {duration: 2000});
+        });
+      this.getUsers();
+    } else {
+      this.snackBar.open('You have to select access type first!', null, {duration: 2000});
+    }
+  }
+
+  public deleteUser(id) {
+    this.userService.deleteUser(id).subscribe(data => {
+      this.getUsers();
+    });
+  }
+
+  public openDialog() {
+    this.matDialog.open(CreateUserDialogComponent).afterClosed().subscribe(closed => {
+      this.getUsers();
     });
   }
 }

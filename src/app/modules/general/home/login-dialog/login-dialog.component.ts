@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/core/http/login.service';
-import { User } from 'src/app/shared/models/user';
 
 @Component({
   selector: 'app-login-dialog',

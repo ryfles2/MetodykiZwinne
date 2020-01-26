@@ -18,13 +18,15 @@
           <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Action</mat-header-cell>
           <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
             <mat-form-field id="action-select">
-            <mat-select #select>
-              <mat-option value="1">Unlock</mat-option>
-              <mat-option value="2">Lock</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <button mat-icon-button (click)="this.updateLocker(locker.id, select.value)"><mat-icon>check</mat-icon></button>
-        </mat-cell>
+              <mat-select #select>
+                <mat-option value="1">Unlock</mat-option>
+                <mat-option value="2">Lock</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <button mat-icon-button (click)="this.updateLocker(locker.id, select.value)">
+              <mat-icon>check</mat-icon>
+            </button>
+          </mat-cell>
         </ng-container>
 
 
@@ -32,12 +34,17 @@
         <mat-row *matRowDef="let row; columns: managementTabs"></mat-row>
       </mat-table>
     </mat-tab>
-    <mat-tab class="tab-content" label="Errors"> Content 2 </mat-tab>
+    <mat-tab class="tab-content" label="Errors"> Content 2</mat-tab>
     <mat-tab class="tab-content" label="Users">
       <mat-table [dataSource]="this.users">
         <ng-container matColumnDef="User">
-          <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center" *matHeaderCellDef>User</mat-header-cell>
-          <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="center center" *matCellDef="let user">
+          <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center"
+                           *matHeaderCellDef>User
+          </mat-header-cell>
+          <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="left center" *matCellDef="let user">
+            <button mat-icon-button (click)="this.deleteUser(user.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
             {{user.login + ' (' + rightsMatrixMap[user.type] + ')'}}
           </mat-cell>
         </ng-container>
@@ -45,36 +52,34 @@
         <ng-container matColumnDef="Rights">
           <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Rights edit</mat-header-cell>
           <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let user">
-              <mat-radio-group fxLayout="row">
-                <div *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center" [ngClass]="'right-group'">
-                  <mat-radio-button #radio [color]="'primary'"  [value]="right.id">{{right.name}}</mat-radio-button>
-                </div>
-              </mat-radio-group>
+            <div *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center"
+                 [ngClass]="'right-group'">
+              <button mat-flat-button (click)="this.updateUserType(user.id, right.id)">{{right.name}}</button>
+            </div>
           </mat-cell>
         </ng-container>
 
-        <ng-container matColumnDef="Action">
-          <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center" *matHeaderCellDef></mat-header-cell>
-          <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="center center" *matCellDef="let user">
-            <button mat-icon-button (click)="this.updateUserType(user.id, radio.value)"><mat-icon>check</mat-icon></button>
-          </mat-cell>
-        </ng-container>
 
         <mat-header-row *matHeaderRowDef="usersTabs"></mat-header-row>
         <mat-row *matRowDef="let row; columns: usersTabs"></mat-row>
       </mat-table>
+      <div fxLayout="row" fxLayoutAlign="center center">
+        <button mat-icon-button (click)="this.openDialog()">
+          <mat-icon>person_add</mat-icon>
+        </button>
+      </div>
     </mat-tab>
     <mat-tab class="tab-content" label="Charts">
       <div class="chart-wrapper">
         <canvas baseChart
-        [datasets]="barChartData"
-        [labels]="barChartLabels"
-        [options]="barChartOptions"
-        [plugins]="barChartPlugins"
-        [legend]="barChartLegend"
-        [chartType]="barChartType">
-      </canvas>
-    </div>
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
     </mat-tab>
   </mat-tab-group>
 </div>

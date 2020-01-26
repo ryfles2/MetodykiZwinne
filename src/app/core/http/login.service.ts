@@ -27,7 +27,7 @@ export class LoginService {
         .concat(this.serviceParameters[1])
         .concat('=')
         .concat(values[1]),
-        {Type: 'text'}
+        {responseType: 'text'}
     );
   }
 }
