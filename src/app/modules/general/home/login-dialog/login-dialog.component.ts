@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/core/http/login.service';
+import { CustomMaterialModule } from '../../../custom-material/custom-material.module';
 
 @Component({
   selector: 'app-login-dialog',
