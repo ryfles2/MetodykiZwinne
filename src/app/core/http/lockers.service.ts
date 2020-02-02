@@ -14,6 +14,7 @@ export class LockersService {
   constructor(private httpClient: HttpClient) { }
 
   getLockers(): Observable<Locker[]> {
+    console.log(environment.apiUrl);
     return this.httpClient.get<Locker[]>(environment.apiUrl + this.getLockersUrl);
   }
 

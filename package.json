@@ -25,6 +25,7 @@
     "angular-chart": "^0.5.0",
     "angular-font-awesome": "^3.1.2",
     "chart.js": "^2.9.3",
+    "ember-cli-cors": "0.0.2",
     "flex-layout": "^1.0.1",
     "ng2-charts": "^2.3.0",
     "ngx-spinner": "^8.1.0",

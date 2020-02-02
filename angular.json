@@ -70,7 +70,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "SmartPoolSystem:build"
+            "browserTarget": "SmartPoolSystem:build",
+            "proxyConfig": "proxy.conf.json"
           },
           "configurations": {
             "production": {

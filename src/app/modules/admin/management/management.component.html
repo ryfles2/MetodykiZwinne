@@ -1,5 +1,4 @@
-<div id="admin-wrapper" fxLayout="column" fxLayoutAlign="start center">
-
+<div id="admin-wrapper" fxFlex fxLayout="column" fxLayoutAlign="center center">
   <mat-tab-group id='tab-group' [backgroundColor]="'accent'">
     <mat-tab class="tab-content" label="Keys">
       <div id="keys-wrapper" *ngIf="this.loginService.activeUser.type > 0; else notAuthorized">
@@ -83,7 +82,7 @@
 
 
           <mat-header-row *matHeaderRowDef="errorsTabs"></mat-header-row>
-          <mat-row *matRowDef="let row; let error; columns: errorsTabs" [ngStyle]="{'background-color': errorColorMap[error.state],'opacity': 0.7}"> </mat-row>
+          <mat-row *matRowDef="let row; let error; columns: errorsTabs" [ngStyle]="{'background-color': errorColorMap[error.state]}"> </mat-row>
         </mat-table>
       </div>
       <ng-template #notAuthorized>
@@ -109,8 +108,8 @@
 
           <ng-container matColumnDef="Rights">
             <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Rights edit</mat-header-cell>
-            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let user">
-              <div *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center"
+            <mat-cell fxHide.lt-md fxFlex fxLayoutAlign="center center" *matCellDef="let user">
+              <div fxHide.lt-md *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center"
                    [ngClass]="'right-group'">
                 <button mat-flat-button (click)="this.updateUserType(user.id, right.id)">{{right.name}}</button>
               </div>
@@ -129,8 +128,7 @@
       </div>
       <ng-template #notAuthorized>
         <div class="not-authorized" fxLayoutAlign="center center">
-          <h2>You are not authorized</h2>
-        </div>
+          <mat-icon>lock</mat-icon>        </div>
       </ng-template>
     </mat-tab>
     <mat-tab class="tab-content" label="Charts">

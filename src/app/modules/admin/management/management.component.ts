@@ -61,7 +61,7 @@ export class ManagementComponent implements OnInit {
   };
 
   errorColorMap = {
-    1: '#FF652F',
+    1: '#FFE400',
     2: '#14A76C'
   };
 
