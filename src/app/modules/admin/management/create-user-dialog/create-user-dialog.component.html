@@ -1,4 +1,4 @@
-<div>
+<div (keyup.enter)="submit(login.value=='' ? undefined : login.value, password.value=='' ? undefined : password.value, rights.value==undefined ? undefined : rights.value)">
   <div id="title" fxLayout="row" fxLayoutAlign="center center">
     <h2>Create an user</h2>
   </div>

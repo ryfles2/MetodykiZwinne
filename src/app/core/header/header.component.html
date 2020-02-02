@@ -1,17 +1,27 @@
 <div fxLayout="row wrap" fxLayoutAlign="center center" color="primary" id="header">
-<div fxFlex fxLayoutAlign="start start" id="logo">
-  <img src="../../../assets/logo.png"/>
-</div>
-<div fxFlex>
-</div>
-<div>
-  <mat-list id="header-nav" fxFlex fxLayoutAlign="center center">
-    <mat-list-item *ngIf="router.url == '/showLoginPanel'">
-        <button [ngClass]="'nav-item'" mat-icon-button color="accent" (click)="showLoginDialog()"><mat-icon>account_circle</mat-icon></button>
-    </mat-list-item>
-    <ng-template #loggedIn>
-      <div id="logged-as">Logged as <u>{{ username }}</u></div>
-    </ng-template>
-  </mat-list>
-</div>
+  <div fxFlex fxLayoutAlign="start start" id="logo">
+    <img src="../../../assets/logo.png"/>
+  </div>
+  <div fxFlex>
+  </div>
+  <div *ngIf="!this.loginService.loggedIn && this.loginService.activeUser === undefined; else loggedIn;">
+    <mat-list id="header-nav" fxFlex fxLayoutAlign="center center">
+      <mat-list-item *ngIf="router.url == '/showLoginPanel'">
+        <button [ngClass]="'nav-item'" mat-icon-button color="accent" (click)="showLoginDialog()">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+      </mat-list-item>
+
+    </mat-list>
+  </div>
+  <ng-template #loggedIn>
+    <mat-menu #userMenu="matMenu">
+      <button [routerLink]="['/admin']" mat-menu-item>Admin</button>
+    </mat-menu>
+    <div [matMenuTriggerFor]="userMenu" fxLayoutAlign="center center" id="logged-as">
+      <p id="user-text">
+        {{ this.loginService.activeUser.login.substring(0, 1).toUpperCase() }}
+      </p>
+    </div>
+  </ng-template>
 </div>

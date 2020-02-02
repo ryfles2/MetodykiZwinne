@@ -7,6 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularFontAwesomeModule } from 'angular-font-awesome';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { ChartsModule } from 'ng2-charts';
+import {MatMenuModule} from "@angular/material/menu";
 
 
 
@@ -34,6 +35,7 @@ import { ChartsModule } from 'ng2-charts';
     MatSnackBarModule,
     MatCheckboxModule,
     ChartsModule,
+    MatMenuModule
   ],
 
   exports: [
@@ -57,7 +59,8 @@ import { ChartsModule } from 'ng2-charts';
     MatSelectModule,
     MatSnackBarModule,
     MatCheckboxModule,
-    ChartsModule
+    ChartsModule,
+    MatMenuModule
   ]
 })
 export class CustomMaterialModule { }

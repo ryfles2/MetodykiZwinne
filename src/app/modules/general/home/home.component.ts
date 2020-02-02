@@ -22,9 +22,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.spinner.show();
+    this.spinner.show('homeSpinner');
     setTimeout(() => {
-      this.spinner.hide();
+      this.spinner.hide('homeSpinner');
     }, 2000);
 
   }

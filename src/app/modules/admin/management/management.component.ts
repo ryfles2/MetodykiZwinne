@@ -13,6 +13,9 @@ import {Observable} from "rxjs";
 import {MatRadioButton} from "@angular/material/radio";
 import {MatDialog} from "@angular/material/dialog";
 import {CreateUserDialogComponent} from "./create-user-dialog/create-user-dialog.component";
+import {NgxSpinnerModule, NgxSpinnerService} from "ngx-spinner";
+import {NgxSpinner} from "ngx-spinner/lib/ngx-spinner.enum";
+import {LoginService} from "../../../core/http/login.service";
 
 @Component({
   selector: 'app-management',
@@ -64,8 +67,10 @@ export class ManagementComponent implements OnInit {
   constructor(public lockerService: LockersService,
               public statisticsService: StatisticsService,
               public userService: UserService,
+              public loginService: LoginService,
               public snackBar: MatSnackBar,
-              public matDialog: MatDialog) {
+              public matDialog: MatDialog,
+              public ngxSpinner: NgxSpinnerService) {
 
   }
 
@@ -133,15 +138,16 @@ export class ManagementComponent implements OnInit {
     if (type != undefined) {
       this.userService.updateUserType(id, type).subscribe(data => {
           this.snackBar.open('User rights have been updated successfully!', null, {duration: 2000});
+          this.getUsers();
         },
         error => {
           this.snackBar.open('Something went wrong..', null, {duration: 2000});
         });
-      this.getUsers();
     } else {
       this.snackBar.open('You have to select access type first!', null, {duration: 2000});
     }
   }
+
 
   public deleteUser(id) {
     this.userService.deleteUser(id).subscribe(data => {

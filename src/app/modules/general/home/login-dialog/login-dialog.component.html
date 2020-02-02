@@ -1,11 +1,13 @@
-<div fxLayout="column" fxFlexAlign="center center">
-  <h3> Login </h3>
+<div (keyup.enter)="submit(username.value, password.value)" fxLayout="column" fxLayoutAlign="center center">
+  <div fxLayoutAlign="center center">
+    <h2> Login </h2>
+  </div>
   <mat-form-field>
     <input matInput #username placeholder="Username"/>
   </mat-form-field>
 
   <mat-form-field>
-    <input matInput #password placeholder="Password"/>
+    <input matInput #password type="password" placeholder="Password"/>
   </mat-form-field>
 
     <button mat-button (click)="submit(username.value, password.value)">Submit</button>

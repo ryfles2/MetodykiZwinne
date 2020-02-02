@@ -6,15 +6,17 @@ import { CustomMaterialModule } from '../modules/custom-material/custom-material
 import { LockersService } from './http/lockers.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginDialogComponent } from '../modules/general/home/login-dialog/login-dialog.component';
+import {RouterModule} from "@angular/router";
 
 
 
 @NgModule({
   declarations: [HeaderComponent, FooterComponent],
-  imports: [
-    CommonModule,
-    CustomMaterialModule
-  ],
+    imports: [
+        CommonModule,
+        CustomMaterialModule,
+        RouterModule
+    ],
   exports: [
     HeaderComponent,
     FooterComponent,

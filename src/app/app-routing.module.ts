@@ -3,13 +3,14 @@ import { Routes, RouterModule } from '@angular/router';
 import { HomeComponent } from './modules/general/home/home.component';
 import { Errno404Component } from './modules/error/errno404/errno404.component';
 import { ManagementComponent } from './modules/admin/management/management.component';
+import {AuthGuard} from "./core/auth.guard";
 
 
 const routes: Routes = [
   {path: 'home', component: HomeComponent},
   {path: 'error', component: Errno404Component},
   {path: 'showLoginPanel', component: HomeComponent},
-  {path: 'admin', component: ManagementComponent},
+  {path: 'admin', component: ManagementComponent, canActivate: [AuthGuard]},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: '**', redirectTo: '/error'}
 ];

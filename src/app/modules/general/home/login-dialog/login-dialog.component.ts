@@ -17,17 +17,15 @@ export class LoginDialogComponent implements OnInit {
   ngOnInit() {}
 
   public submit(username, password) {
-    this.loginService
-      .getLoginStatus([username, password])
-      .subscribe(status => {
-        if(status === 'Success') {
-          this.loginService.user.username = username;
-          this.loginService.user.isLogged = true;
-        }
-      },
-      error => {
-        console.log('Error!');
+    if (username === '' || password === '') {
+
+    } else {
+      this.loginService.login(username, password).subscribe(user => {
+        this.loginService.activeUser = user;
+        this.loginService.loggedIn = true;
+        console.log(this.loginService.activeUser);
       });
+    }
     this.dialogRef.close();
   }
 }
