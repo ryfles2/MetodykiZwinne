@@ -19,7 +19,7 @@
           <ng-container matColumnDef="Action">
             <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Action</mat-header-cell>
             <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
-              <mat-form-field id="action-select">
+              <mat-form-field class="action-select">
                 <mat-select #select>
                   <mat-option value="1">Unlock</mat-option>
                   <mat-option value="2">Lock</mat-option>
@@ -40,7 +40,51 @@
     </mat-tab>
     <mat-tab class="tab-content" label="Errors">
       <div id="error-wrapper" *ngIf="this.loginService.activeUser.type > 1; else notAuthorized">
+        <mat-table [dataSource]="this.errors">
+          <ng-container matColumnDef="Id">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Id</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{ error.id }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Message">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Message</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{error.message}}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="State">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>State</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{ errorsMap[error.state]}}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Locker">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Locker</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{error.locker_id}}
+            </mat-cell>
+          </ng-container>
 
+          <ng-container matColumnDef="Action">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              <mat-form-field class="action-select">
+                <mat-select #select>
+                  <mat-option value="1">Pending</mat-option>
+                  <mat-option value="2">Resolved</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-icon-button (click)="this.updateError(error.id, select.value)">
+                <mat-icon>check</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="errorsTabs"></mat-header-row>
+          <mat-row *matRowDef="let row; let error; columns: errorsTabs" [ngStyle]="{'background-color': errorColorMap[error.state],'opacity': 0.7}"> </mat-row>
+        </mat-table>
       </div>
       <ng-template #notAuthorized>
         <div class="not-authorized" fxLayoutAlign="center center">

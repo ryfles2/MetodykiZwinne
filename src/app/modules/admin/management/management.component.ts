@@ -16,6 +16,8 @@ import {CreateUserDialogComponent} from "./create-user-dialog/create-user-dialog
 import {NgxSpinnerModule, NgxSpinnerService} from "ngx-spinner";
 import {NgxSpinner} from "ngx-spinner/lib/ngx-spinner.enum";
 import {LoginService} from "../../../core/http/login.service";
+import {ErrorsService} from "../../../core/http/errors.service";
+import {SpsError} from "../../../shared/models/sps-error";
 
 @Component({
   selector: 'app-management',
@@ -25,12 +27,14 @@ import {LoginService} from "../../../core/http/login.service";
 export class ManagementComponent implements OnInit {
 
   managementTabs = ['Number', 'State', 'Action'];
+  errorsTabs = ['Id', 'Message', 'State', 'Locker', 'Action'];
   statesMap = {
     1: 'Free',
     2: 'Busy'
   };
   lockers: Locker[] = [];
   statistics: Statistic[] = [];
+  errors: SpsError[] = [];
   statisticsUsed: number[] = [];
   statisticsDay: string[] = [];
 
@@ -49,6 +53,18 @@ export class ManagementComponent implements OnInit {
     3: 'High',
     4: 'Full'
   };
+
+  errorsMap = {
+    0: 'New',
+    1: 'Pending',
+    2: 'Resolved'
+  };
+
+  errorColorMap = {
+    1: '#FF652F',
+    2: '#14A76C'
+  };
+
   usersTabs = ['User', 'Rights'];
   users: SpsUser[];
 
@@ -70,6 +86,7 @@ export class ManagementComponent implements OnInit {
               public loginService: LoginService,
               public snackBar: MatSnackBar,
               public matDialog: MatDialog,
+              public errorService: ErrorsService,
               public ngxSpinner: NgxSpinnerService) {
 
   }
@@ -78,6 +95,7 @@ export class ManagementComponent implements OnInit {
     this.getLockersData();
     this.getStatistics();
     this.getUsers();
+    this.getErrors();
   }
 
   public updateLocker(id: number, state: number) {
@@ -100,7 +118,7 @@ export class ManagementComponent implements OnInit {
         console.log(data);
       },
       (error) => {
-        console.log('Error while fetching lockers');
+        console.log('SpsError while fetching lockers');
       }
     );
   }
@@ -123,7 +141,7 @@ export class ManagementComponent implements OnInit {
         ];
       },
       (error) => {
-        console.log('Error while fetching statistics');
+        console.log('SpsError while fetching statistics');
       });
   }
 
@@ -158,6 +176,19 @@ export class ManagementComponent implements OnInit {
   public openDialog() {
     this.matDialog.open(CreateUserDialogComponent).afterClosed().subscribe(closed => {
       this.getUsers();
+    });
+  }
+
+  public getErrors() {
+    this.errorService.getErrors().subscribe(errors => {
+      this.errors = errors;
+      console.log(errors);
+    });
+  }
+
+  public updateError(state, id) {
+    this.errorService.updateError(state, id).subscribe(data => {
+      this.getErrors();
     });
   }
 }
