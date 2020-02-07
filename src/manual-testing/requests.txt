@@ -1,0 +1,31 @@
+--login--
+localhost:4200/getLogin.php?login=admin&pass=admin
+localhost:4200/getLogin.php?login=SpringUser&pass=test
+localhost:4200/getLogin.php?login=SpringUser2&pass=test
+
+--get lockers--
+get localhost:4200/getLockers.php
+
+--update-locker--
+post localhost:4200/updateLockersStatus.php?id=1&state=2
+post localhost:4200/updateLockersStatus.php?id=1&state=3
+post localhost:4200/updateLockersStatus.php?id=1&state=1
+
+--update-user--
+post localhost:4200/updateUser.php/?id=2&type=2
+post localhost:4200/updateUser.php/?id=2&type=1
+
+--add-user--
+post localhost:4200/addUser.php/?login=usertest&pass=test&type=1
+
+--get-statistics--
+get localhost:4200/getStatistics.php
+
+--get-all-users--
+get localhost:4200/getAllUsers.php
+
+--delete-user--
+
+delete localhost:4200/deleteUser.php?id=4
+
+
