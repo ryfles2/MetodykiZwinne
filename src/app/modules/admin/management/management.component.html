@@ -1,0 +1,153 @@
+<div id="admin-wrapper" fxFlex fxLayout="column" fxLayoutAlign="center center">
+  <mat-tab-group id='tab-group' [backgroundColor]="'accent'">
+    <mat-tab class="tab-content" label="Keys">
+      <div id="keys-wrapper" *ngIf="this.loginService.activeUser.type > 0; else notAuthorized">
+        <mat-table [dataSource]="this.lockers">
+          <ng-container matColumnDef="Number">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Number</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
+              {{ locker.id }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="State">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>State</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
+              {{ statesMap[locker.state] }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Action">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let locker">
+              <mat-form-field class="action-select">
+                <mat-select #select>
+                  <mat-option value="1">Unlock</mat-option>
+                  <mat-option value="2">Lock</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-icon-button (click)="this.updateLocker(locker.id, select.value)">
+                <mat-icon>check</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="managementTabs"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: managementTabs"></mat-row>
+        </mat-table>
+      </div>
+
+    </mat-tab>
+    <mat-tab class="tab-content" label="Errors">
+      <div id="error-wrapper" *ngIf="this.loginService.activeUser.type > 1; else notAuthorized">
+        <mat-table [dataSource]="this.errors">
+          <ng-container matColumnDef="Id">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Id</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{ error.id }}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Message">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Message</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{error.message}}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="State">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>State</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{ errorsMap[error.state]}}
+            </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="Locker">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Locker</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              {{error.locker_id}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Action">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Action</mat-header-cell>
+            <mat-cell fxFlex fxLayoutAlign="center center" *matCellDef="let error">
+              <mat-form-field class="action-select">
+                <mat-select #select>
+                  <mat-option value="1">Pending</mat-option>
+                  <mat-option value="2">Resolved</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <button mat-icon-button (click)="this.updateError(error.id, select.value)">
+                <mat-icon>check</mat-icon>
+              </button>
+            </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="errorsTabs"></mat-header-row>
+          <mat-row *matRowDef="let row; let error; columns: errorsTabs" [ngStyle]="{'background-color': errorColorMap[error.state]}"> </mat-row>
+        </mat-table>
+      </div>
+      <ng-template #notAuthorized>
+        <div class="not-authorized" fxLayoutAlign="center center">
+          <h2>You are not authorized</h2>
+        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab class="tab-content" label="Users">
+      <div id="user-wrapper" *ngIf="this.loginService.activeUser.type > 3; else notAuthorized">
+        <mat-table [dataSource]="this.users">
+          <ng-container matColumnDef="User">
+            <mat-header-cell [ngClass]="'small-width'" color="'accent'" fxFlex="25%" fxLayoutAlign="center center"
+                             *matHeaderCellDef>User
+            </mat-header-cell>
+            <mat-cell [ngClass]="'small-width'" fxFlex="25%" fxLayoutAlign="left center" *matCellDef="let user">
+              <button mat-icon-button (click)="this.deleteUser(user.id)">
+                <mat-icon>delete</mat-icon>
+              </button>
+              {{user.login + ' (' + rightsMatrixMap[user.type] + ')'}}
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="Rights">
+            <mat-header-cell fxFlex fxLayoutAlign="center center" *matHeaderCellDef>Rights edit</mat-header-cell>
+            <mat-cell fxHide.lt-md fxFlex fxLayoutAlign="center center" *matCellDef="let user">
+              <div fxHide.lt-md *ngFor="let right of rightsMatrix" fxLayout="column" fxLayoutAlign="center center"
+                   [ngClass]="'right-group'">
+                <button mat-flat-button (click)="this.updateUserType(user.id, right.id)">{{right.name}}</button>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="usersTabs"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: usersTabs"></mat-row>
+        </mat-table>
+        <div fxLayout="row" fxLayoutAlign="center center">
+          <button mat-icon-button (click)="this.openDialog()">
+            <mat-icon>person_add</mat-icon>
+          </button>
+        </div>
+      </div>
+      <ng-template #notAuthorized>
+        <div class="not-authorized" fxLayoutAlign="center center">
+          <mat-icon>lock</mat-icon>        </div>
+      </ng-template>
+    </mat-tab>
+    <mat-tab class="tab-content" label="Charts">
+      <div class="chart-wrapper" *ngIf="this.loginService.activeUser.type > 2; else notAuthorized">
+        <canvas baseChart
+                [datasets]="barChartData"
+                [labels]="barChartLabels"
+                [options]="barChartOptions"
+                [plugins]="barChartPlugins"
+                [legend]="barChartLegend"
+                [chartType]="barChartType">
+        </canvas>
+      </div>
+      <ng-template #notAuthorized>
+        <div class="not-authorized" fxLayoutAlign="center center">
+          <h2>You are not authorized</h2>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>
+

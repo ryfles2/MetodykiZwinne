@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { Observable } from 'rxjs';
-import { User } from 'src/app/shared/models/user';
+import { SpsUser } from 'src/app/shared/models/sps-user';
+import {Observable} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,16 @@ import { User } from 'src/app/shared/models/user';
 export class LoginService {
   serviceUrl = '/getLogin.php';
   serviceParameters = ['login', 'pass'];
-  user: User;
+  activeUser: SpsUser;
+  loggedIn = false;
 
   constructor(private httpClient: HttpClient) {
-    this.user = new User();
+
+  }
+
+  login(login, password): Observable<SpsUser> {
+    const loginUrl = '/getLogin.php';
+    return this.httpClient.get<SpsUser>(environment.apiUrl + loginUrl + '/?login=' + login + '&pass=' + password);
   }
 
   getLoginStatus(values) {

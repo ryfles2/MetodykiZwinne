@@ -12,7 +12,7 @@ export class User {
   }
 
   get isLogged() {
-    return this._isLogged;
+    return this._isLogged; 
   }
 
   set username(username) {

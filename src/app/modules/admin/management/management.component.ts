@@ -1,0 +1,194 @@
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Locker} from 'src/app/shared/models/locker';
+import {LockersService} from 'src/app/core/http/lockers.service';
+import {MatSnackBar} from '@angular/material';
+import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
+import {Label} from 'ng2-charts';
+import {StatisticsService} from 'src/app/core/http/statistics.service';
+import {Statistic} from 'src/app/shared/models/statistic';
+import {UserService} from 'src/app/core/http/user.service';
+import {SpsUser} from 'src/app/shared/models/sps-user';
+import {MatCheckbox} from "@angular/material/checkbox";
+import {Observable} from "rxjs";
+import {MatRadioButton} from "@angular/material/radio";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateUserDialogComponent} from "./create-user-dialog/create-user-dialog.component";
+import {NgxSpinnerModule, NgxSpinnerService} from "ngx-spinner";
+import {NgxSpinner} from "ngx-spinner/lib/ngx-spinner.enum";
+import {LoginService} from "../../../core/http/login.service";
+import {ErrorsService} from "../../../core/http/errors.service";
+import {SpsError} from "../../../shared/models/sps-error";
+
+@Component({
+  selector: 'app-management',
+  templateUrl: './management.component.html',
+  styleUrls: ['./management.component.less']
+})
+export class ManagementComponent implements OnInit {
+
+  managementTabs = ['Number', 'State', 'Action'];
+  errorsTabs = ['Id', 'Message', 'State', 'Locker', 'Action'];
+  statesMap = {
+    1: 'Free',
+    2: 'Busy'
+  };
+  lockers: Locker[] = [];
+  statistics: Statistic[] = [];
+  errors: SpsError[] = [];
+  statisticsUsed: number[] = [];
+  statisticsDay: string[] = [];
+
+  @ViewChild('radioButton', {static: false}) accessRadioRef;
+
+  rightsMatrix = [
+    {id: 1, name: 'Low'},
+    {id: 2, name: 'Mid'},
+    {id: 3, name: 'High'},
+    {id: 4, name: 'Full'}
+  ];
+
+  rightsMatrixMap = {
+    1: 'Low',
+    2: 'Mid',
+    3: 'High',
+    4: 'Full'
+  };
+
+  errorsMap = {
+    0: 'New',
+    1: 'Pending',
+    2: 'Resolved'
+  };
+
+  errorColorMap = {
+    1: '#FFE400',
+    2: '#14A76C'
+  };
+
+  usersTabs = ['User', 'Rights'];
+  users: SpsUser[];
+
+  barChartOptions: ChartOptions = {
+    responsive: true,
+  };
+  barChartLabels: Label[] = [this.statisticsDay];
+  barChartType: ChartType = 'bar';
+  barChartLegend = true;
+  barChartPlugins = [];
+
+  barChartData: ChartDataSets[] = [
+    {data: this.statisticsUsed, label: 'Visits'}
+  ];
+
+  constructor(public lockerService: LockersService,
+              public statisticsService: StatisticsService,
+              public userService: UserService,
+              public loginService: LoginService,
+              public snackBar: MatSnackBar,
+              public matDialog: MatDialog,
+              public errorService: ErrorsService,
+              public ngxSpinner: NgxSpinnerService) {
+
+  }
+
+  ngOnInit() {
+    this.getLockersData();
+    this.getStatistics();
+    this.getUsers();
+    this.getErrors();
+  }
+
+  public updateLocker(id: number, state: number) {
+    console.log('ID ---> ' + id);
+    console.log('STATE ---> ' + state);
+    this.lockerService.updateLocker(id, state).subscribe((data) => {
+        this.snackBar.open('Locker has been updated successfully', null, {duration: 2000});
+        this.getLockersData();
+      },
+      (error) => {
+        this.snackBar.open('Something went wrong while performing this operation..', null, {duration: 2000});
+        console.log(error);
+      });
+  }
+
+  private getLockersData() {
+    this.lockerService.getLockers().subscribe(
+      (data) => {
+        this.lockers = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log('SpsError while fetching lockers');
+      }
+    );
+  }
+
+  public getStatistics() {
+    this.statisticsService.getStatistics().subscribe((data) => {
+        this.statistics = data;
+        console.log(data);
+        this.statisticsDay = this.statistics.map(x => {
+          return x['day'];
+        });
+        this.statisticsUsed = this.statistics.map(x => {
+          return x['used'];
+        });
+
+
+        this.barChartLabels = this.statisticsDay;
+        this.barChartData = [
+          {data: this.statisticsUsed, label: 'Lockers actions'}
+        ];
+      },
+      (error) => {
+        console.log('SpsError while fetching statistics');
+      });
+  }
+
+  private getUsers() {
+    this.userService.getUsers().subscribe(data => {
+      this.users = data;
+      console.log(data);
+    });
+  }
+
+  public updateUserType(id, type) {
+    if (type != undefined) {
+      this.userService.updateUserType(id, type).subscribe(data => {
+          this.snackBar.open('User rights have been updated successfully!', null, {duration: 2000});
+          this.getUsers();
+        },
+        error => {
+          this.snackBar.open('Something went wrong..', null, {duration: 2000});
+        });
+    } else {
+      this.snackBar.open('You have to select access type first!', null, {duration: 2000});
+    }
+  }
+
+
+  public deleteUser(id) {
+    this.userService.deleteUser(id).subscribe(data => {
+      this.getUsers();
+    });
+  }
+
+  public openDialog() {
+    this.matDialog.open(CreateUserDialogComponent).afterClosed().subscribe(closed => {
+      this.getUsers();
+    });
+  }
+
+  public getErrors() {
+    this.errorService.getErrors().subscribe(errors => {
+      this.errors = errors;
+      console.log(errors);
+    });
+  }
+
+  public updateError(state, id) {
+    this.errorService.updateError(state, id).subscribe(data => {
+      this.getErrors();
+    });
+  }
+}
