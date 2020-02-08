@@ -1,0 +1,19 @@
+<mat-card>
+  <div id="report-form" fxLayout="column" fxLayoutAlign="center center">
+    <mat-card-title id="title">Report an issue</mat-card-title>
+    <mat-form-field>
+      <mat-select #lockerNumber placeholder="Locker number">
+        <mat-option *ngFor="let locker of this.lockersAvailable" value="{{locker.id}}">{{locker.id}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <textarea #errorDescription matInput></textarea>
+    </mat-form-field>
+    <mat-card-actions id="report-form-actions">
+      <button id="submit" mat-stroked-button (click)="submit(lockerNumber.value, errorDescription.value)">Submit
+      </button>
+    </mat-card-actions>
+  </div>
+</mat-card>
+
+

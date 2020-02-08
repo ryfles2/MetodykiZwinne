@@ -18,13 +18,13 @@ export class ErrorsService {
     return this.httpClient.get<SpsError[]>(environment.apiUrl + getErrorsUrl);
   }
 
-  addError(message, state, locker_id): Observable<any> {
+  addError(message, state, lockerId): Observable<any> {
     const addErrorUrl = '/addError.php';
-    return this.httpClient.post(environment.apiUrl + addErrorUrl + '/?msg=' + message + '&state=' + state + '&lockId=' + locker_id, null)
+    return this.httpClient.post(environment.apiUrl + addErrorUrl + '/?msg=' + message + '&state=' + state + '&lockId=' + lockerId, null);
   }
 
   updateError(id, state) {
     const updateErrorUrl = '/updateError.php';
-    return this.httpClient.post(environment.apiUrl + updateErrorUrl + '/?id=' + id + '&state=' + state, null)
+    return this.httpClient.post(environment.apiUrl + updateErrorUrl + '/?id=' + id + '&state=' + state, null);
   }
 }
