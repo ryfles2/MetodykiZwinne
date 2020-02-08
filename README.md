@@ -5,7 +5,7 @@ Web application allowing managing customers' lockers & keys. This application wo
 
 ## Technology stack
 
-This webapp is built with the newest version of Angular(Front-end), PHP(Back-end), MySQL(Database).
+This webapp is built with the newest version of Angular 8+(Front-end), PHP 7.3.11(Back-end), MySQL(Database), Server Apache 2.4, XAMPP, Figma
 
 
 ## Testing
