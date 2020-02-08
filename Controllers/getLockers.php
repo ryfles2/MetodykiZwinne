@@ -1,4 +1,5 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once "databaseConnector.php";
 
 $selectLockers = "SELECT id, state FROM lockers";

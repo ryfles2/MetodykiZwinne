@@ -1,7 +1,7 @@
 <?php
 require_once "databaseConnector.php";
 
-$selectErrors = "SELECT id, message, state FROM errors";
+$selectErrors = "SELECT id, message, state, locker_id FROM errors";
 $result = $con->query($selectErrors);
 if ($result->num_rows > 0) {
     $Errors =[];

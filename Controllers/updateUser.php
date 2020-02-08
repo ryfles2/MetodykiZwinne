@@ -18,6 +18,7 @@ else
     $response = array(
         'status' => '1',
         'description' => 'Database problem'
+		);
 }
 
 ?>

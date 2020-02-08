@@ -1,8 +1,9 @@
 <?php
+header("Access-Control-Allow-Origin: *");
 require_once "databaseConnector.php";
 
 $msg = $_GET['message'];
-$lockId = $_GET['locker_id'];
+$lockId = $_GET['lockId'];
 $state = $_GET['state'];
 
     $addError_sql = "INSERT INTO errors (message, locker_id, state)
@@ -13,7 +14,7 @@ $state = $_GET['state'];
     {
         $response = array(
         'status' => '0',
-        'description' => 'Error added'
+        'description' => 'Error added
     );
     }
     else

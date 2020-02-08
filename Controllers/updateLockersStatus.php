@@ -8,8 +8,6 @@ $updateLockersQuery = "UPDATE lockers SET state = \"$state\" WHERE id = \"$id\""
 $resultForUdpate = $con->query($updateLockersQuery);
 if($resultForUdpate)
 {
-    echo "Success";
-
     if($state == 1)
     {
         $today = date("Y/m/d");
@@ -32,13 +30,12 @@ if($resultForUdpate)
         }
 
         $resultForUdpate = $con->query($updateStatsticsQuery);
-
     }
+	echo json_encode(array("Status", 0));
 }   
 else
 {
-    echo "Failed";
-    echo "Database problem";
+  	echo json_encode(array("Status", 1));
 }
 
 ?>
